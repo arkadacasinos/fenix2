@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Феникс казино онлайн - официальный сайт Fenix</title>
+    <meta name="theme-color" content="#0B0D1A">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#0B0D1A',
+                        foreground: '#E8E8ED',
+                        card: '#13152A',
+                        popover: '#171937',
+                        muted: '#1C1E38',
+                        'muted-foreground': '#7B7D9E',
+                        primary: '#EE7522',
+                        'primary-dark': '#C45A15',
+                        secondary: '#5D5FA8',
+                        border: '#252747',
+                        input: '#1C1E38',
+                        ring: '#EE7522',
+                        sidebar: '#0E1025',
+                        'sidebar-border': '#1E2040',
+                        surface: {
+                            300: '#1C1E38',
+                            400: '#252750',
+                            500: '#2A2C52',
+                        },
+                        placeholder: '#6B6D8E',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0B0D1A; color: #E8E8ED; font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0D1A; }
+        ::-webkit-scrollbar-thumb { background: #252747; border-radius: 3px; }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #EE7722, #EE4D22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #EE7722, #EE4D22);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #EE7722, #EE4D22);
+            box-shadow: 0 8px 24px rgba(238,117,34,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: black;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1;
+        }
+        .btn-primary:hover::after { opacity: 0.1; }
+        .btn-primary:active::after { opacity: 0.2; }
+        .btn-primary span { position: relative; z-index: 2; }
+        .sidebar-item.active { color: #EE7522; }
+        .sidebar-item.active .active-dot { opacity: 1; transform: translateX(0) scale(1); }
+        .sidebar-item:hover { color: #E8E8ED; }
+        .game-card:hover .game-overlay { opacity: 1; }
+        .game-card:hover .game-badges { opacity: 0; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .glow-purple {
+            position: absolute;
+            width: 228px; height: 228px;
+            background: #313187;
+            opacity: 0.2;
+            filter: blur(80px);
+            border-radius: 32px;
+            pointer-events: none;
+        }
+        @keyframes slideBanner {
+            0%, 30% { transform: translateX(0); }
+            33%, 63% { transform: translateX(-100%); }
+            66%, 96% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+        .banner-slide { animation: slideBanner 15s infinite ease-in-out; }
+        .category-btn.active {
+            border-color: #5D5FA8;
+            color: #E8E8ED;
+        }
+        .deposit-card {
+            background: linear-gradient(var(--popover), var(--popover)) padding-box,
+                        linear-gradient(146deg, rgba(23,23,61,1) 0%, rgba(54,54,96,1) 3%, rgba(23,23,61,1) 10%, rgba(23,23,61,1) 98%) border-box;
+            border: 1px solid transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="mx-auto flex min-h-dvh w-full max-w-[1920px] flex-col">
+        <header class="fixed top-0 left-1/2 z-50 h-16 xl:h-[72px] w-full max-w-[1920px] -translate-x-1/2 bg-background/75 backdrop-blur-[4px]">
+            <div class="flex h-full items-center justify-between px-4 xl:px-6">
+                <div class="flex items-center gap-2 xl:gap-6">
+                    <div class="flex items-center gap-2 xl:w-[240px] xl:px-1.5">
+                        <button id="sidebarToggle" class="hidden xl:grid size-8 cursor-pointer place-items-center rounded-xs border border-border bg-muted text-foreground" aria-label="Свернуть/развернуть меню">
+                            <i data-lucide="chevron-right" class="size-4 transition-transform duration-200"></i>
+                        </button>
+                        <a href="#" class="inline-flex cursor-pointer items-center gap-2 rounded-md" aria-label="На главную">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 shrink-0">
+                                <path d="M39.0412 10.0007C39.0412 10.0007 38.6042 8.85497 37.7037 8.40679C36.8032 7.9589 35.4395 8.14847 35.4395 8.14847C35.4395 8.14847 35.1073 6.73548 31.7243 6.87357C28.3413 7.01165 26.7151 7.39912 25.3864 6.4858C24.0577 5.57247 24.014 5.13322 23.9092 5.20226C23.8044 5.2713 23.5069 6.31349 24.6173 7.71785C25.8412 9.22547 28.2365 9.09632 28.2365 9.09632C28.2365 9.09632 27.2312 10.1129 25.8062 10.1733C24.3812 10.2337 23.6818 9.95786 23.6818 9.95786C23.6818 9.95786 24.3724 11.25 25.3864 11.4482C26.4005 11.6464 27.5981 11.1982 27.5981 11.1982C27.5981 11.1982 26.1202 12.8639 26.5164 14.7239C26.9621 16.8175 29.0095 17.3781 33.534 20.3261C39.0282 23.9056 38.5758 27.8988 38.4777 28.9454C38.3793 29.9921 37.8221 31.3813 38.4448 30.7611C39.0678 30.1409 41.4673 26.445 40.6214 23.0334C39.7756 19.6217 37.2973 18.0129 36.2745 17.1407C35.2517 16.2684 33.4422 14.2138 34.5436 12.0815C35.6452 9.94923 39.0412 10.001 39.0412 10.001V10.0007Z" fill="url(#fg1)"/>
+                                <path d="M34.5043 22.5099C34.5043 22.5099 33.217 20.6729 26.3742 17.5475C19.3047 14.3186 16.5135 10.0522 15.8576 7.20927C15.2017 4.36633 15.3068 1.80759 15.5955 1.10972C15.8842 0.411858 16.3562 -0.421711 15.5366 0.244013C14.717 0.909738 11.6094 3.20332 10.6651 7.23516C9.72114 11.267 11.8978 13.8644 13.2745 15.3634C14.6512 16.8624 16.8411 17.9609 16.8411 17.9609C16.8411 17.9609 15.0447 18.3614 11.963 16.1C8.88134 13.8385 7.9111 11.0989 7.9111 11.0989C7.9111 11.0989 6.31123 14.7301 7.9111 19.7441C9.51097 24.758 13.9823 25.7918 16.8671 25.9987C19.7519 26.2055 20.6829 25.8695 20.6829 25.8695C20.6829 25.8695 19.0045 27.0843 16.4869 27.2587C13.9693 27.4331 11.0387 26.5608 11.0387 26.5608C11.0387 26.5608 13.1039 29.3133 17.1165 30.4957C21.1292 31.678 24.6104 31.0385 28.8788 29.1193C33.1469 27.2004 34.5043 22.5093 34.5043 22.5093V22.5099Z" fill="url(#fg2)"/>
+                                <path d="M35.1862 23.2078C35.1862 23.2078 37.8874 25.5338 37.2318 29.9534C36.5762 34.3731 31.908 36.6797 29.6066 38.1142C27.3052 39.5486 25.3188 41.3318 24.5911 43.503C23.8633 45.674 24.2568 48 24.2568 48C24.2568 48 21.6015 46.0421 21.4046 43.0183C21.2081 39.9944 22.939 37.5326 24.1191 36.5634C25.2992 35.5941 25.7908 35.3034 25.7908 35.3034C25.7908 35.3034 23.3518 35.4584 21.1292 37.6681C18.9067 39.8777 18.7098 42.5141 18.7098 42.5141C18.7098 42.5141 17.1954 38.7924 18.7098 35.8849C20.2242 32.9773 22.8668 32.281 26.2169 31.4266C29.587 30.5671 32.6683 28.6157 33.888 26.3481C35.0008 24.2786 35.1862 23.2078 35.1862 23.2078Z" fill="url(#fg3)"/>
+                                <defs>
+                                    <linearGradient id="fg1" x1="23.6818" y1="18.0549" x2="40.7999" y2="18.0549" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient>
+                                    <linearGradient id="fg2" x1="7.20024" y1="15.5462" x2="34.5043" y2="15.5462" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient>
+                                    <linearGradient id="fg3" x1="18.0367" y1="35.6039" x2="37.3342" y2="35.6039" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient>
+                                </defs>
+                            </svg>
+                            <span class="hidden xl:block h-8 w-[103px] shrink-0">
+                                <svg viewBox="0 0 103 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-foreground h-full w-full">
+                                    <path d="M0 0.744184H19.2348V6.34747H6.02824V13.4829H15.7448V18.6047H6.02824V31.3434H0V0.744184Z" fill="currentColor"/>
+                                    <path d="M32.7123 32C29.0636 32 26.1949 31.0369 24.1061 29.1108C22.0174 27.1555 20.973 24.4268 20.973 20.9248C20.973 17.4519 21.8984 14.7086 23.7492 12.6949C25.6264 10.6813 28.2968 9.67442 31.7604 9.67442C34.0342 9.67442 35.9643 10.1414 37.5507 11.0752C39.1371 12.0091 40.3401 13.3078 41.1597 14.9713C41.9793 16.6056 42.3892 18.4587 42.3892 20.5308V23.2011H26.684C27.107 25.886 29.3809 27.2285 33.5054 27.2285C34.7217 27.2285 35.9775 27.1117 37.2731 26.8782C38.5686 26.6448 39.6923 26.3238 40.6441 25.9152V30.5554C39.7188 30.9932 38.529 31.3434 37.0748 31.606C35.6206 31.8687 34.1664 32 32.7123 32ZM36.7179 18.9111C36.6385 17.5103 36.1626 16.4305 35.2901 15.6717C34.4176 14.8837 33.2146 14.4897 31.6811 14.4897C30.174 14.4897 28.9843 14.8837 28.1118 15.6717C27.2392 16.4596 26.7633 17.5394 26.684 18.9111H36.7179Z" fill="currentColor"/>
+                                    <path d="M45.7014 10.3311H51.4916V12.9138C52.3641 11.834 53.3953 11.0315 54.5851 10.5062C55.8013 9.95166 57.0704 9.67442 58.3924 9.67442C60.9835 9.67442 62.9136 10.4478 64.1827 11.9945C65.4782 13.5121 66.126 15.5695 66.126 18.1669V31.3434H60.1374V18.9111C60.1374 16.197 59.0005 14.8399 56.7267 14.8399C55.722 14.8399 54.7834 15.1172 53.9109 15.6717C53.0384 16.197 52.298 16.985 51.6899 18.0356V31.3434H45.7014V10.3311Z" fill="currentColor"/>
+                                    <path d="M73.393 7.09166C72.4676 7.09166 71.6876 6.75604 71.053 6.08482C70.4185 5.41359 70.1012 4.56726 70.1012 3.54583C70.1012 2.55358 70.4185 1.72184 71.053 1.05062C71.6876 0.350205 72.4676 0 73.393 0C74.3183 0 75.0983 0.350205 75.7329 1.05062C76.3674 1.72184 76.6847 2.55358 76.6847 3.54583C76.6847 4.56726 76.3674 5.41359 75.7329 6.08482C75.0983 6.75604 74.3183 7.09166 73.393 7.09166ZM70.3788 10.3311H76.4071V31.3434H70.3788V10.3311Z" fill="currentColor"/>
+                                    <path d="M88.1674 20.487L80.5527 10.3311H87.2552L91.4988 16.0219L95.782 10.3311H102.484L94.8301 20.487L103 31.3434H96.3769L91.4988 24.9083L86.6603 31.3434H79.9975L88.1674 20.487Z" fill="currentColor"/>
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="hidden xl:block">
+                        <button class="flex h-12 w-[260px] cursor-pointer items-center gap-3 rounded-2xl border border-transparent bg-input px-3 text-left shadow-xs transition-colors hover:bg-muted">
+                            <i data-lucide="search" class="h-4 w-4 shrink-0 text-muted-foreground"></i>
+                            <span class="min-w-0 flex-1 truncate text-sm font-medium text-placeholder">Поиск игры</span>
+                            <div class="inline-flex items-center gap-1 shrink-0 rounded-xl bg-surface-400 p-1">
+                                <kbd class="inline-flex h-6 min-w-0 items-center justify-center rounded-lg bg-surface-300 px-2 text-xs font-semibold text-foreground">Ctrl</kbd>
+                                <span class="text-xs font-semibold text-placeholder">+</span>
+                                <kbd class="inline-flex h-6 min-w-0 items-center justify-center rounded-lg bg-surface-300 px-2 text-xs font-semibold text-foreground">K</kbd>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 xl:gap-4">
+                    <button class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium h-12 rounded-xl px-6 border border-border text-foreground transition-all hover:bg-muted">
+                        Вход
+                    </button>
+                    <button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium text-white h-12 rounded-xl px-6 transition-all">
+                        <span>Регистрация</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div class="pointer-events-none fixed top-[72px] left-1/2 z-40 hidden w-full max-w-[1920px] -translate-x-1/2 px-6 xl:block" id="sidebarContainer">
+            <aside class="pointer-events-auto h-[calc(100dvh-72px-16px)] max-h-[calc(100dvh-72px-16px)] min-h-0 overflow-hidden rounded-2xl transition-[width] duration-200 ease-out w-[240px]" id="sidebar" aria-label="Sidebar">
+                <div class="flex h-full w-full flex-col bg-sidebar py-4">
+                    <div class="relative min-h-0 flex-1 gap-0 overflow-y-auto scrollbar-hide">
+                        <div class="mb-[2px] px-4">
+                            <div class="block w-full overflow-hidden rounded-[18px] p-px cursor-default" style="background: linear-gradient(305.97deg, #17173d 25.62%, #17173d 79.61%, #17173d 85.22%, #282850 92.44%)">
+                                <div class="flex items-center justify-between rounded-[18px] py-2 pr-0 pl-[14px]" style="background-image: url(http://static.photos/abstract/320x240/1); background-size: cover; background-position: center;">
+                                    <div class="flex flex-col text-left">
+                                        <span class="text-gradient-primary mb-1 text-[12px] font-bold leading-[1.25]">Страхуем ваш первый депозит</span>
+                                        <span class="text-[12px] font-bold leading-[1.25] text-foreground">Кешбэк до 70%</span>
+                                    </div>
+                                    <img src="http://static.photos/abstract/200x200/2" alt="" class="block h-auto w-[94px] object-contain mr-0.5">
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="flex w-full min-w-0 flex-col gap-1 px-4">
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item active peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 pl-4 text-start text-sm transition-all duration-300 ease-out" data-active="true">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 translate-x-0 scale-100 opacity-100 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="home" class="size-5 shrink-0 text-primary"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Лобби</span>
+                                </a>
+                            </li>
+                            <li class="bg-sidebar-border w-full shrink-0 h-px" aria-hidden="true"></li>
+                            <li class="group relative">
+                                <button class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="gift" class="size-5 shrink-0"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Бонусы</span>
+                                </button>
+                            </li>
+                            <li class="bg-sidebar-border w-full shrink-0 h-px" aria-hidden="true"></li>
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="grid-3x3" class="size-5 shrink-0"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Слоты</span>
+                                </a>
+                            </li>
+                            <li class="bg-sidebar-border w-full shrink-0 h-px" aria-hidden="true"></li>
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="trophy" class="size-5 shrink-0"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Турниры</span>
+                                </a>
+                            </li>
+                            <li class="bg-sidebar-border w-full shrink-0 h-px" aria-hidden="true"></li>
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="sparkles" class="size-5 shrink-0"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Дары феникса</span>
+                                </a>
+                            </li>
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="box" class="size-5 shrink-0 text-secondary"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Сундуки</span>
+                                </a>
+                            </li>
+                            <li class="bg-sidebar-border w-full shrink-0 h-px" aria-hidden="true"></li>
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="crown" class="size-5 shrink-0"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">VIP Клуб</span>
+                                </a>
+                            </li>
+                            <li class="bg-sidebar-border w-full shrink-0 h-[2px]" aria-hidden="true"></li>
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="monitor" class="size-5 shrink-0"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Десктоп приложение</span>
+                                </a>
+                            </li>
+                            <li class="bg-sidebar-border w-full shrink-0 h-[2px]" aria-hidden="true"></li>
+                            <li class="group relative">
+                                <a href="#" class="sidebar-item peer relative flex h-11 w-full cursor-pointer items-center gap-2 rounded-md p-3 text-start text-sm text-muted-foreground transition-all duration-300 ease-out hover:text-foreground">
+                                    <div class="active-dot pointer-events-none absolute top-1/2 left-1 -translate-y-1/2 -translate-x-1 scale-75 opacity-0 transition-all duration-300">
+                                        <div class="bg-primary size-1 rounded-full shadow-[0_0_8px_3px_rgba(255,126,33,0.2)]"></div>
+                                    </div>
+                                    <i data-lucide="headphones" class="size-5 shrink-0"></i>
+                                    <span class="min-w-0 flex-1 truncate overflow-hidden whitespace-nowrap">Поддержка</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2 px-4">
+                        <div class="flex h-12 w-full items-center overflow-hidden rounded-xs py-2 px-0 bg-transparent border border-border rounded-lg">
+                            <button class="flex w-full items-center justify-between px-4 h-full text-placeholder text-sm cursor-pointer hover:text-foreground transition-colors">
+                                <span>Русский</span>
+                                <i data-lucide="chevron-down" class="size-4 shrink-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <div class="flex min-h-0 flex-auto flex-col px-4 pt-16 md:px-6 xl:pt-[72px]">
+            <div class="flex min-h-0 flex-auto flex-col xl:grid xl:gap-x-4 xl:grid-cols-[240px_minmax(0,1fr)]">
+                <div aria-hidden="true" class="hidden xl:block"></div>
+                <main class="flex min-h-0 flex-1 flex-col pb-20 xl:pb-0">
+                    <div class="relative min-h-[calc(100dvh-64px+1px)] flex-auto xl:min-h-[calc(100dvh-72px+1px)]">
+                        <div class="w-full space-y-6">
+                            <div class="min-w-0 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,601px)] lg:gap-4">
+                                <div>
+                                    <section class="relative h-[346px] overflow-hidden rounded-2xl border border-border bg-card" aria-label="Главные баннеры">
+                                        <div class="relative h-[346px] overflow-hidden">
+                                            <div class="flex h-full banner-slide">
+                                                <div class="min-w-0 shrink-0 grow-0 basis-full h-full">
+                                                    <div class="relative h-[346px] bg-[#0D0D21]">
+                                                        <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-90" src="http://static.photos/abstract/1200x630/10" alt="Открывай сундуки">
+                                                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0D0D21]/80 via-[#151637]/45 to-transparent"></div>
+                                                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0A0A1A]/30 via-transparent to-transparent"></div>
+                                                        <img class="pointer-events-none absolute inset-y-0 right-0 z-[1] h-[92%] w-[48%] object-contain object-right-bottom" alt="" src="http://static.photos/abstract/640x360/11" aria-hidden="true">
+                                                        <div class="relative z-10 flex h-[346px] flex-col p-6 pb-16">
+                                                            <div class="flex h-full min-h-0 max-w-[416px] flex-col">
+                                                                <div class="bg-gradient-to-r from-[#EE4D22] to-[#EE7722] bg-clip-text text-[40px] leading-[1.2] font-semibold text-transparent">Открывай сундуки</div>
+                                                                <div class="mt-2 flex min-h-0 flex-1 flex-col">
+                                                                    <div class="min-h-0 shrink overflow-y-auto text-white/90 text-[16px] leading-[1.3] scrollbar-hide">
+                                                                        Депозиты открывают сундуки:<br>
+                                                                        - Бонусы до 425% + 375 FS<br>
+                                                                        - Apple-гаджеты, BMW X5<br>
+                                                                        - До 100 000 ₽ без депозита
+                                                                    </div>
+                                                                    <div class="mt-3 shrink-0">
+                                                                        <button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium text-white h-9 px-4 py-2">
+                                                                            <span>ОТКРЫТЬ</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="min-w-0 shrink-0 grow-0 basis-full h-full">
+                                                    <div class="relative h-[346px] bg-[#0D0D21]">
+                                                        <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-90" src="http://static.photos/nature/1200x630/22" alt="Бонус за депозит">
+                                                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0D0D21]/80 via-[#151637]/45 to-transparent"></div>
+                                                        <div class="relative z-10 flex h-[346px] flex-col p-6 pb-16">
+                                                            <div class="flex h-full min-h-0 max-w-[416px] flex-col">
+                                                                <div class="bg-gradient-to-r from-[#EE4D22] to-[#EE7722] bg-clip-text text-[40px] leading-[1.2] font-semibold text-transparent">Бонус 150%</div>
+                                                                <div class="mt-2 flex min-h-0 flex-1 flex-col">
+                                                                    <div class="min-h-0 shrink text-white/90 text-[16px] leading-[1.3]">
+                                                                        На первый депозит + 60 FS<br>
+                                                                        для Sweet Bonanza
+                                                                    </div>
+                                                                    <div class="mt-3 shrink-0">
+                                                                        <button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium text-white h-9 px-4 py-2">
+                                                                            <span>ПОЛУЧИТЬ</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="min-w-0 shrink-0 grow-0 basis-full h-full">
+                                                    <div class="relative h-[346px] bg-[#0D0D21]">
+                                                        <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-90" src="http://static.photos/technology/1200x630/33" alt="VIP Клуб">
+                                                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0D0D21]/80 via-[#151637]/45 to-transparent"></div>
+                                                        <div class="relative z-10 flex h-[346px] flex-col p-6 pb-16">
+                                                            <div class="flex h-full min-h-0 max-w-[416px] flex-col">
+                                                                <div class="bg-gradient-to-r from-[#EE4D22] to-[#EE7722] bg-clip-text text-[40px] leading-[1.2] font-semibold text-transparent">VIP Клуб</div>
+                                                                <div class="mt-2 flex min-h-0 flex-1 flex-col">
+                                                                    <div class="min-h-0 shrink text-white/90 text-[16px] leading-[1.3]">
+                                                                        Кешбэк до 30%<br>
+                                                                        Вывод ≤ 5 минут<br>
+                                                                        Персональный менеджер 24/7
+                                                                    </div>
+                                                                    <div class="mt-3 shrink-0">
+                                                                        <button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium text-white h-9 px-4 py-2">
+                                                                            <span>ПОДРОБНЕЕ</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <section class="w-full space-y-4 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0" aria-label="Награды лобби">
+                                    <div class="flex flex-col gap-4 lg:h-[152px] lg:shrink-0">
+                                        <div class="relative overflow-hidden rounded-2xl border border-transparent bg-popover p-4 gap-4 flex flex-col">
+                                            <div class="glow-purple -left-[98px] -top-[98px] rotate-[-28.77deg]"></div>
+                                            <div class="relative flex min-h-0 flex-1 items-center justify-center rounded-lg bg-muted/50 px-4 py-[10px]">
+                                                <div class="relative flex w-full flex-col items-center text-center">
+                                                    <div class="text-placeholder text-xs mb-1">Процент кешбэка</div>
+                                                    <div class="text-gradient-primary text-2xl font-bold tabular-nums" style="text-shadow: 0 0 4px rgba(223,99,10,0.4)">до 30%</div>
+                                                </div>
+                                            </div>
+                                            <button class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium h-10 px-6 w-full rounded-lg border border-border text-foreground transition-all hover:bg-muted">
+                                                Забрать кешбэк
+                                            </button>
+                                        </div>
+                                        <div class="flex gap-4 lg:h-[68px] lg:shrink-0">
+                                            <a href="#" class="deposit-card relative flex min-h-[68px] flex-1 overflow-hidden rounded-2xl cursor-pointer">
+                                                <div class="flex h-[68px] w-[68px] shrink-0 items-center justify-center bg-card">
+                                                    <i data-lucide="box" class="size-6 text-primary"></i>
+                                                </div>
+                                                <div class="relative flex min-w-0 flex-1 items-center justify-between gap-4 px-4 py-3">
+                                                    <div class="glow-purple -top-[148px] left-[10px]"></div>
+                                                    <span class="text-sm text-foreground relative font-normal">Сундуки</span>
+                                                    <span class="text-gradient-primary relative text-sm font-medium tabular-nums">—</span>
+                                                </div>
+                                            </a>
+                                            <button class="deposit-card relative flex min-h-[68px] flex-1 cursor-pointer overflow-hidden rounded-2xl">
+                                                <div class="flex h-[68px] w-[68px] shrink-0 items-center justify-center bg-card">
+                                                    <i data-lucide="gift" class="size-6 text-primary"></i>
+                                                </div>
+                                                <div class="relative flex min-w-0 flex-1 items-center justify-between gap-4 px-4 py-3">
+                                                    <div class="glow-purple -top-[148px] left-[10px]"></div>
+                                                    <span class="text-sm text-foreground relative font-normal">Бонусы</span>
+                                                    <span class="text-gradient-primary relative text-sm font-medium tabular-nums">3</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-4 lg:h-[348px]">
+                                        <div class="relative overflow-hidden rounded-2xl border border-transparent bg-popover p-4 flex flex-col gap-4 lg:h-[180px] lg:shrink-0">
+                                            <div class="glow-purple -left-[98px] -top-[98px] rotate-[-28.77deg]"></div>
+                                            <div class="flex flex-col gap-1">
+                                                <div class="text-base font-bold text-foreground">Сила огня</div>
+                                                <div class="flex items-center justify-between gap-4">
+                                                    <div class="text-xs text-muted-foreground">Дополнительный кешбэк</div>
+                                                    <div class="text-gradient-primary flex text-sm font-bold" style="text-shadow: 0 0 4px rgba(238,115,34,0.4)">
+                                                        +23%
+                                                        <i data-lucide="flame" class="size-5 text-[#EE4D22] ml-1"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium h-10 px-6 w-full rounded-lg border border-border text-foreground transition-all hover:bg-muted">
+                                                VIP-клуб
+                                            </a>
+                                            <div class="flex items-center justify-between gap-2 border-t border-surface-500 py-3 pr-3 pl-4 -mx-4 -mb-4 mt-auto">
+                                                <div class="text-sm font-bold text-foreground flex shrink-0 items-center gap-1">
+                                                    <span>Уровень:</span>
+                                                    <span>IV</span>
+                                                </div>
+                                                <div class="flex shrink-0 items-center justify-end gap-1">
+                                                    <i data-lucide="flame" class="size-6 text-primary"></i>
+                                                    <i data-lucide="flame" class="size-6 text-primary"></i>
+                                                    <i data-lucide="flame" class="size-6 text-primary"></i>
+                                                    <i data-lucide="flame" class="size-6 text-primary"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="relative overflow-hidden rounded-2xl border border-transparent bg-popover p-4 flex flex-col gap-3 lg:h-[160px] lg:shrink-0">
+                                            <div class="glow-purple -left-[98px] -top-[98px] rotate-[-28.77deg]"></div>
+                                            <div class="space-y-2">
+                                                <div class="text-base font-bold text-foreground">Бездепозитные турниры</div>
+                                                <div class="space-y-1.5">
+                                                    <div class="flex items-center justify-between gap-4">
+                                                        <span class="text-xs text-muted-foreground">Баланс коинов:</span>
+                                                        <span class="flex items-center gap-1">
+                                                            <span class="text-gradient-primary text-xs font-bold tabular-nums">11 000</span>
+                                                            <i data-lucide="coins" class="size-4 text-primary"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex items-center justify-between gap-4">
+                                                        <span class="text-xs text-muted-foreground">Место в турнире:</span>
+                                                        <span class="text-xs text-muted-foreground tabular-nums">-</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium h-10 px-6 w-full rounded-lg border border-border text-foreground transition-all hover:bg-muted">
+                                                Перейти к турниру
+                                            </a>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <section class="space-y-4" aria-label="Каталог игр">
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="min-w-0 flex-1">
+                                            <div class="hidden md:block">
+                                                <div class="relative w-full">
+                                                    <input type="search" class="w-full rounded-2xl border border-transparent bg-surface-300 px-3 pt-[22px] pb-[6px] text-foreground h-12 text-sm font-medium shadow-xs outline-none transition-colors hover:bg-surface-400 focus:bg-surface-400 pr-10" placeholder=" ">
+                                                    <i data-lucide="search" class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 h-4 w-4 text-muted-foreground"></i>
+                                                    <span class="pointer-events-none absolute top-[6px] left-3 text-placeholder text-xs font-medium">Поиск</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="min-w-0 flex-1 md:flex-none">
+                                            <button class="flex h-12 w-full md:w-[200px] cursor-pointer items-center gap-2 rounded-2xl border border-transparent bg-surface-300 px-3 py-[10px] text-left shadow-xs transition-colors hover:bg-surface-400">
+                                                <div class="min-w-0 flex-1 truncate text-sm font-medium text-placeholder">Провайдер</div>
+                                                <i data-lucide="chevron-down" class="size-4 shrink-0 text-placeholder"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                                        <div class="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto scrollbar-hide">
+                                            <button class="category-btn active relative flex h-[43px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 py-3 text-sm font-medium transition-colors border-secondary text-foreground bg-muted">
+                                                <span class="relative z-10 whitespace-nowrap">Лобби</span>
+                                            </button>
+                                            <button class="category-btn relative flex h-[43px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 py-3 text-sm font-medium transition-colors border-border text-muted-foreground hover:text-foreground bg-muted">
+                                                <span class="relative z-10 whitespace-nowrap">Слоты</span>
+                                            </button>
+                                            <button class="category-btn relative flex h-[43px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 py-3 text-sm font-medium transition-colors border-border text-muted-foreground hover:text-foreground bg-muted">
+                                                <span class="relative z-10 whitespace-nowrap">Belatra</span>
+                                            </button>
+                                            <button class="category-btn relative flex h-[43px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 py-3 text-sm font-medium transition-colors border-border text-muted-foreground hover:text-foreground bg-muted">
+                                                <span class="relative z-10 whitespace-nowrap">Лайв</span>
+                                            </button>
+                                            <button class="category-btn relative flex h-[43px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 py-3 text-sm font-medium transition-colors border-border text-muted-foreground hover:text-foreground bg-muted">
+                                                <span class="relative z-10 whitespace-nowrap">Быстрые</span>
+                                            </button>
+                                            <button class="category-btn relative flex h-[43px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 py-3 text-sm font-medium transition-colors border-border text-muted-foreground hover:text-foreground bg-muted">
+                                                <span class="relative z-10 whitespace-nowrap">Отыгрыш бонусов</span>
+                                            </button>
+                                        </div>
+                                        <div class="flex shrink-0 items-center gap-1">
+                                            <button class="flex cursor-pointer items-center gap-1 rounded-lg p-2 text-sm font-bold text-secondary transition-colors">
+                                                <i data-lucide="crosshair" class="h-[18px] w-[18px]"></i>
+                                                <span>Лучшие</span>
+                                            </button>
+                                            <button class="flex cursor-pointer items-center gap-1 rounded-lg p-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">
+                                                <i data-lucide="sparkles" class="h-[18px] w-[18px]"></i>
+                                                <span>Новое</span>
+                                            </button>
+                                            <button class="flex cursor-pointer items-center gap-1 rounded-lg p-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">
+                                                <i data-lucide="gift" class="h-[18px] w-[18px]"></i>
+                                                <span>Бонусы</span>
+                                            </button>
+                                            <button class="flex cursor-pointer items-center gap-1 rounded-lg p-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">
+                                                <i data-lucide="flame" class="h-[18px] w-[18px]"></i>
+                                                <span>Горячие</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="gamesGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8">
+                                </div>
+                                <div class="flex flex-col items-center gap-3 pt-2">
+                                    <button id="showMoreBtn" class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium h-10 rounded-xl px-6 border border-border text-foreground transition-all hover:bg-muted">
+                                        Смотреть больше
+                                    </button>
+                                </div>
+                            </section>
+                            <div class="rounded-2xl bg-card p-6 text-muted-foreground text-sm leading-relaxed space-y-4 hidden lg:block">
+                                <h1 class="text-foreground text-xl font-bold">Fenix Casino — возрождение азарта с быстрыми выплатами и live-трансляциями</h1>
+                                <h2 class="text-foreground text-lg font-semibold">Регистрация: 20 секунд до первого спина</h2>
+                                <p>Нажмите «Регистрация», введите e-mail либо номер телефона, задайте пароль и подтвердите код из SMS. Учетная запись активна менее чем за полминуты, а на баланс сразу начисляется <strong class="text-foreground">150 % + 60 фриспинов</strong> для Sweet Bonanza.</p>
+                                <h2 class="text-foreground text-lg font-semibold">Программа лояльности «Fenix Rise»</h2>
+                                <p>Ступени — Ash, Ember, Flame, Blaze, Inferno. Кэшбэк 12–25 % каждые 72 ч без вейджера, Weekend Reload — 80 % + 40 FS по выходным, Слот-лиги с банком до 10 000 000 ₽.</p>
+                            </div>
+                        </div>
+                        <footer class="mt-4 w-full overflow-hidden rounded-2xl bg-card p-6">
+                            <div class="flex w-full flex-col gap-6">
+                                <div class="flex w-full flex-col gap-6 lg:flex-row lg:items-start lg:gap-[100px]">
+                                    <div class="flex min-w-0 flex-col gap-4 lg:flex-1">
+                                        <div class="flex items-center gap-1">
+                                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 shrink-0">
+                                                <path d="M39.04 10c0 0-.44-1.15-1.34-1.6-.9-.45-2.26-.26-2.26-.26 0 0-.33-1.41-3.71-1.28-3.38.14-5.01.53-6.34-.36-1.33-.89-1.37-1.34-1.48-1.27-.1.07-.4 1.11.71 2.52 1.22 1.5 3.62 1.38 3.62 1.38s-1.01 1.02-2.43 1.08c-1.42.06-2.12-.22-2.12-.22s.69 1.29 1.7 1.49c1.01.2 2.21-.25 2.21-.25s-1.48 1.67-1.08 3.53c.45 2.09 2.49 2.65 7.02 5.6 5.49 3.58 5.04 7.57 4.94 8.62-.1 1.05-.66 2.44-.04 1.82.62-.62 3.02-4.32 2.18-7.73-.85-3.41-3.33-5.02-4.35-5.89-1.02-.87-2.83-2.93-1.73-5.06C33.65 9.95 39.04 10 39.04 10Z" fill="url(#ff1)"/>
+                                                <path d="M34.5 22.51s-1.29-1.84-8.13-4.96c-7.07-3.23-9.86-7.5-10.52-10.34-.66-2.84-.55-5.4-.27-6.1.29-.7.76-1.53-.06-.87-.82.67-3.93 2.96-4.87 6.99-.94 4.03 1.23 6.63 2.61 8.13 1.38 1.5 3.57 2.6 3.57 2.6s-1.8.4-4.88-1.86C8.13 13.84 7.16 11.1 7.16 11.1s-1.6 3.63 0 8.65c1.6 5.01 6.07 6.05 8.96 6.26 2.88.21 3.81-.13 3.81-.13s-1.68 1.21-4.19 1.39c-2.52.17-5.45-.7-5.45-.7s2.07 2.75 6.08 3.94c4.01 1.18 7.5.54 11.76-1.38 4.27-1.92 5.37-6.61 5.37-6.61Z" fill="url(#ff2)"/>
+                                                <defs><linearGradient id="ff1" x1="23.68" y1="18.05" x2="40.8" y2="18.05" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient><linearGradient id="ff2" x1="7.2" y1="15.55" x2="34.5" y2="15.55" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient></defs>
+                                            </svg>
+                                            <span class="text-foreground text-lg font-bold">Fenix</span>
+                                        </div>
+                                        <div class="text-muted-foreground text-xs leading-relaxed">
+                                            <p>Fenix Casino - онлайн-казино с большим выбором лицензированных слотов и live-игр от ведущих провайдеров. Высокие лимиты на вывод, удобные способы пополнения, честный и высокий RTP.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex w-full flex-col gap-6 md:w-auto md:flex-row md:gap-[100px]">
+                                        <div class="flex w-full flex-col gap-4 md:w-[224px]">
+                                            <div class="text-gradient-primary text-base font-bold">Информация</div>
+                                            <a href="#" class="text-foreground text-sm hover:text-primary transition-colors">Правила и Условия</a>
+                                            <a href="#" class="text-foreground text-sm hover:text-primary transition-colors">Политика конфиденциальности</a>
+                                            <a href="#" class="text-foreground text-sm hover:text-primary transition-colors">Ответственная игра</a>
+                                            <a href="#" class="text-foreground text-sm hover:text-primary transition-colors">Политика AML</a>
+                                        </div>
+                                        <div class="flex w-full flex-col gap-4 md:w-[224px]">
+                                            <div class="text-gradient-primary text-base font-bold">Контакты</div>
+                                            <a href="#" class="inline-flex items-center gap-3 text-foreground text-sm hover:text-primary transition-colors">
+                                                <span class="inline-flex items-center justify-center size-[38px] rounded-xl border border-border bg-muted">
+                                                    <i data-lucide="send" class="size-4"></i>
+                                                </span>
+                                                @FenixSupp_bot
+                                            </a>
+                                            <a href="#" class="inline-flex items-center gap-3 text-foreground text-sm hover:text-primary transition-colors">
+                                                <span class="inline-flex items-center justify-center size-[38px] rounded-xl border border-border bg-muted">
+                                                    <i data-lucide="mail" class="size-4"></i>
+                                                </span>
+                                                help@support-fenix.com
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="h-px w-full bg-border"></div>
+                                <div class="flex w-full flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex items-center justify-center size-[44px] rounded-lg border border-border bg-muted text-foreground text-sm font-bold">18+</div>
+                                    </div>
+                                    <div class="flex gap-3 flex-row items-center">
+                                        <a href="#" class="flex h-[44px] items-center justify-center overflow-hidden rounded-lg border border-border bg-background px-4">
+                                            <span class="text-xs font-medium text-muted-foreground">Google Play</span>
+                                        </a>
+                                        <a href="#" class="flex h-[44px] items-center justify-center overflow-hidden rounded-lg border border-border bg-background px-4">
+                                            <span class="text-xs font-medium text-muted-foreground">App Store</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-muted-foreground text-xs leading-relaxed">
+                                    Copyright © 2026 fenix.casino принадлежит и управляется компанией 3-102-937046 SOCIEDAD DE RESPONSABILIDAD LIMITADA. fenix.casino лицензирует и регулируется на основании лицензии, выданной Правительством автономного острова Анжуан, No.ALSI-202509033-FI1.
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <div class="fixed bottom-0 left-0 right-0 z-50 xl:hidden bg-background/90 backdrop-blur-md border-t border-border">
+            <div class="flex items-center justify-around h-16">
+                <a href="#" class="flex flex-col items-center gap-1 text-primary">
+                    <i data-lucide="home" class="size-5"></i>
+                    <span class="text-[10px] font-medium">Лобби</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-muted-foreground">
+                    <i data-lucide="grid-3x3" class="size-5"></i>
+                    <span class="text-[10px] font-medium">Слоты</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-muted-foreground">
+                    <i data-lucide="gift" class="size-5"></i>
+                    <span class="text-[10px] font-medium">Бонусы</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-muted-foreground">
+                    <i data-lucide="trophy" class="size-5"></i>
+                    <span class="text-[10px] font-medium">Турниры</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-muted-foreground">
+                    <i data-lucide="headphones" class="size-5"></i>
+                    <span class="text-[10px] font-medium">Поддержка</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        lucide.createIcons();
+        const games = [
+            { name: "The Dog House", provider: "Pragmatic Play", badge: "hot", seed: 101 },
+            { name: "Le Fisherman", provider: "Hacksaw", badge: null, seed: 102 },
+            { name: "Minotaur", provider: "Endorphina", badge: "hot", seed: 103 },
+            { name: "Highway To Hell", provider: "NolimitCity", badge: null, seed: 104 },
+            { name: "Ice Bass", provider: "Belatra", badge: null, seed: 105 },
+            { name: "Gates of Olympus", provider: "Pragmatic Play", badge: null, seed: 106 },
+            { name: "Lady Wolf Moon", provider: "Bgaming", badge: "hot", seed: 107 },
+            { name: "Wild West Gold", provider: "Pragmatic Play", badge: null, seed: 108 },
+            { name: "MummyLand Treasures", provider: "Belatra", badge: "hot", seed: 109 },
+            { name: "Flight Mode", provider: "NolimitCity", badge: null, seed: 110 },
+            { name: "Sugar Rush", provider: "Pragmatic Play", badge: null, seed: 111 },
+            { name: "Chaos Crew 2", provider: "Hacksaw", badge: "hot", seed: 112 },
+            { name: "Seamen", provider: "NolimitCity", badge: null, seed: 113 },
+            { name: "Princess Suki", provider: "Belatra", badge: "hot", seed: 114 },
+            { name: "Dork Unit", provider: "Hacksaw", badge: null, seed: 115 },
+            { name: "Fortune of Giza", provider: "Pragmatic Play", badge: null, seed: 116 },
+            { name: "Ze Zeus", provider: "Hacksaw", badge: null, seed: 117 },
+            { name: "Voodoo Coins", provider: "Belatra", badge: null, seed: 118 },
+            { name: "Starlight Princess", provider: "Pragmatic Play", badge: null, seed: 119 },
+            { name: "Le King", provider: "Hacksaw", badge: null, seed: 120 },
+            { name: "Crown Coins", provider: "Endorphina", badge: null, seed: 121 },
+            { name: "Home Of The Brave", provider: "NolimitCity", badge: null, seed: 122 },
+            { name: "Nazar Wishes", provider: "Endorphina", badge: "new", seed: 123 },
+            { name: "Cyber Gypsies", provider: "Belatra", badge: null, seed: 124 },
+            { name: "Kiss My Chainsaw", provider: "NolimitCity", badge: null, seed: 125 },
+            { name: "Sweet Bonanza", provider: "Pragmatic Play", badge: null, seed: 126 },
+            { name: "CULT.", provider: "Pragmatic Play", badge: "hot", seed: 127 },
+            { name: "Mental", provider: "NolimitCity", badge: null, seed: 128 },
+            { name: "Aztec Clusters", provider: "Bgaming", badge: null, seed: 129 },
+            { name: "The Crypt 2", provider: "NolimitCity", badge: null, seed: 130 },
+            { name: "Riot: Urban Wilds", provider: "Mascot", badge: "new", seed: 131 },
+            { name: "Charm Of The Dragon", provider: "Hacksaw", badge: null, seed: 132 },
+        ];
+        const gamesGrid = document.getElementById('gamesGrid');
+        let loadedCount = 0;
+        const batchSize = 16;
+        function createGameCard(game) {
+            const card = document.createElement('div');
+            card.className = 'game-card group relative overflow-hidden rounded-2xl text-left outline-none cursor-pointer';
+            card.setAttribute('tabindex', '0');
+            let badgeHTML = '';
+            if (game.badge === 'hot') {
+                badgeHTML = `<div class="absolute top-2 left-2 z-10 flex items-center gap-1 transition-opacity game-badges"><div class="inline-flex items-center justify-center rounded-xs bg-primary-dark text-white px-1.5 py-0.5 text-xs font-bold">Горячие</div></div>`;
+            } else if (game.badge === 'new') {
+                badgeHTML = `<div class="absolute top-2 left-2 z-10 flex items-center gap-1 transition-opacity game-badges"><div class="inline-flex items-center justify-center rounded-xs bg-secondary text-white px-1.5 py-0.5 text-xs font-bold">Новое</div></div>`;
+            }
+            card.innerHTML = `
+                <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted">
+                    <img src="http://static.photos/technology/320x240/${game.seed}" alt="${game.name}" class="absolute inset-0 size-full object-cover" draggable="false" loading="lazy">
+                    <div class="game-overlay absolute inset-0 bg-black/65 opacity-0 transition-opacity group-hover:bg-black/75 group-hover:opacity-100"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 transition-opacity pointer-events-none opacity-0 group-hover:pointer-events-auto group-hover:opacity-100">
+                        <button class="flex cursor-pointer items-center justify-center rounded-xl p-3 bg-secondary shadow-lg outline-none" aria-label="${game.name}">
+                            <i data-lucide="play" class="h-5 w-5 text-white rotate-90"></i>
+                        </button>
+                        <button class="cursor-pointer text-sm font-semibold text-white transition-colors outline-none hover:text-primary">Демо игра</button>
+                    </div>
+                    ${badgeHTML}
+                </div>
+                <div class="w-full px-3 py-2.5 bg-card rounded-b-2xl">
+                    <div class="text-foreground truncate text-sm font-medium">${game.name}</div>
+                    <div class="truncate text-xs text-placeholder">${game.provider}</div>
+                </div>
+            `;
+            return card;
+        }
+        function loadMoreGames() {
+            const end = Math.min(loadedCount + batchSize, games.length);
+            for (let i = loadedCount; i < end; i++) {
+                gamesGrid.appendChild(createGameCard(games[i]));
+            }
+            loadedCount = end;
+            lucide.createIcons();
+            if (loadedCount >= games.length) {
+                document.getElementById('showMoreBtn').style.display = 'none';
+            }
+        }
+        loadMoreGames();
+        document.getElementById('showMoreBtn').addEventListener('click', loadMoreGames);
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.remove('border-secondary', 'text-foreground');
+                    b.classList.add('border-border', 'text-muted-foreground');
+                });
+                btn.classList.add('active');
+                btn.classList.remove('border-border', 'text-muted-foreground');
+                btn.classList.add('border-secondary', 'text-foreground');
+            });
+        });
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarContainer = document.getElementById('sidebarContainer');
+        let sidebarCollapsed = false;
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebarCollapsed = !sidebarCollapsed;
+                if (sidebarCollapsed) {
+                    sidebar.style.width = '72px';
+                    sidebar.querySelectorAll('.min-w-0.flex-1, span.text-sm, .active-dot').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                    sidebarToggle.querySelector('i, svg')?.classList.remove('rotate-180');
+                } else {
+                    sidebar.style.width = '240px';
+                    sidebar.querySelectorAll('.min-w-0.flex-1, span.text-sm, .active-dot').forEach(el => {
+                        el.style.display = '';
+                    });
+                    sidebarToggle.querySelector('i, svg')?.classList.add('rotate-180');
+                }
+            });
+        }
+    </script>
+</body>
+</html>7
