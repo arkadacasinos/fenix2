@@ -621,122 +621,105 @@
             </div>
         </div>
     </div>
-    <script>
+<script>
         lucide.createIcons();
-        const games = [
-            { name: "The Dog House", provider: "Pragmatic Play", badge: "hot", seed: 101 },
-            { name: "Le Fisherman", provider: "Hacksaw", badge: null, seed: 102 },
-            { name: "Minotaur", provider: "Endorphina", badge: "hot", seed: 103 },
-            { name: "Highway To Hell", provider: "NolimitCity", badge: null, seed: 104 },
-            { name: "Ice Bass", provider: "Belatra", badge: null, seed: 105 },
-            { name: "Gates of Olympus", provider: "Pragmatic Play", badge: null, seed: 106 },
-            { name: "Lady Wolf Moon", provider: "Bgaming", badge: "hot", seed: 107 },
-            { name: "Wild West Gold", provider: "Pragmatic Play", badge: null, seed: 108 },
-            { name: "MummyLand Treasures", provider: "Belatra", badge: "hot", seed: 109 },
-            { name: "Flight Mode", provider: "NolimitCity", badge: null, seed: 110 },
-            { name: "Sugar Rush", provider: "Pragmatic Play", badge: null, seed: 111 },
-            { name: "Chaos Crew 2", provider: "Hacksaw", badge: "hot", seed: 112 },
-            { name: "Seamen", provider: "NolimitCity", badge: null, seed: 113 },
-            { name: "Princess Suki", provider: "Belatra", badge: "hot", seed: 114 },
-            { name: "Dork Unit", provider: "Hacksaw", badge: null, seed: 115 },
-            { name: "Fortune of Giza", provider: "Pragmatic Play", badge: null, seed: 116 },
-            { name: "Ze Zeus", provider: "Hacksaw", badge: null, seed: 117 },
-            { name: "Voodoo Coins", provider: "Belatra", badge: null, seed: 118 },
-            { name: "Starlight Princess", provider: "Pragmatic Play", badge: null, seed: 119 },
-            { name: "Le King", provider: "Hacksaw", badge: null, seed: 120 },
-            { name: "Crown Coins", provider: "Endorphina", badge: null, seed: 121 },
-            { name: "Home Of The Brave", provider: "NolimitCity", badge: null, seed: 122 },
-            { name: "Nazar Wishes", provider: "Endorphina", badge: "new", seed: 123 },
-            { name: "Cyber Gypsies", provider: "Belatra", badge: null, seed: 124 },
-            { name: "Kiss My Chainsaw", provider: "NolimitCity", badge: null, seed: 125 },
-            { name: "Sweet Bonanza", provider: "Pragmatic Play", badge: null, seed: 126 },
-            { name: "CULT.", provider: "Pragmatic Play", badge: "hot", seed: 127 },
-            { name: "Mental", provider: "NolimitCity", badge: null, seed: 128 },
-            { name: "Aztec Clusters", provider: "Bgaming", badge: null, seed: 129 },
-            { name: "The Crypt 2", provider: "NolimitCity", badge: null, seed: 130 },
-            { name: "Riot: Urban Wilds", provider: "Mascot", badge: "new", seed: 131 },
-            { name: "Charm Of The Dragon", provider: "Hacksaw", badge: null, seed: 132 },
-        ];
+const games = [
+    { name: "The Dog House", provider: "Pragmatic Play", badge: "hot", img: "images/games/doghouse.png" },
+    { name: "Le Fisherman", provider: "Hacksaw", badge: null, img: "images/games/fisherman.png" },
+    { name: "Minotaur", provider: "Endorphina", badge: "hot", img: "images/games/minotaur.png" },
+    { name: "Highway To Hell", provider: "NolimitCity", badge: null, img: "images/games/highway.png" },
+    { name: "Ice Bass", provider: "Belatra", badge: null, img: "images/games/icebass.png" },
+    { name: "Gates of Olympus", provider: "Pragmatic Play", badge: null, img: "images/games/olympus.png" },
+    { name: "Lady Wolf Moon", provider: "Bgaming", badge: "hot", img: "images/games/wolfmoon.png" },
+    { name: "Wild West Gold", provider: "Pragmatic Play", badge: null, img: "images/games/wildwest.png" },
+    { name: "MummyLand Treasures", provider: "Belatra", badge: "hot", img: "images/games/mummyland.png" },
+    { name: "Flight Mode", provider: "NolimitCity", badge: null, img: "images/games/flightmode.png" },
+    { name: "Sugar Rush", provider: "Pragmatic Play", badge: null, img: "images/games/sugarrush.png" },
+    { name: "Chaos Crew 2", provider: "Hacksaw", badge: "hot", img: "images/games/chaoscrew2.png" },
+    { name: "Seamen", provider: "NolimitCity", badge: null, img: "images/games/seamen.png" },
+    { name: "Princess Suki", provider: "Belatra", badge: "hot", img: "images/games/suki.png" },
+    { name: "Dork Unit", provider: "Hacksaw", badge: null, img: "images/games/dorkunit.png" },
+    { name: "Fortune of Giza", provider: "Pragmatic Play", badge: null, img: "images/games/giza.png" },
+    { name: "Ze Zeus", provider: "Hacksaw", badge: null, img: "images/games/zezeus.png" },
+    { name: "Voodoo Coins", provider: "Belatra", badge: null, img: "images/games/voodoocoins.png" },
+    { name: "Starlight Princess", provider: "Pragmatic Play", badge: null, img: "images/games/starlight.png" },
+    { name: "Le King", provider: "Hacksaw", badge: null, img: "images/games/leking.png" },
+    { name: "Crown Coins", provider: "Endorphina", badge: null, img: "images/games/crowncoins.png" },
+    { name: "Home Of The Brave", provider: "NolimitCity", badge: null, img: "images/games/homebrave.png" },
+    { name: "Nazar Wishes", provider: "Endorphina", badge: "new", img: "images/games/nazar.png" },
+    { name: "Cyber Gypsies", provider: "Belatra", badge: null, img: "images/games/gypsies.png" },
+    { name: "Kiss My Chainsaw", provider: "NolimitCity", badge: null, img: "images/games/chainsaw.png" },
+    { name: "Sweet Bonanza", provider: "Pragmatic Play", badge: null, img: "images/games/sweetbonanza.png" },
+    { name: "CULT.", provider: "Pragmatic Play", badge: "hot", img: "images/games/cult.png" },
+    { name: "Mental", provider: "NolimitCity", badge: null, img: "images/games/mental.png" },
+    { name: "Aztec Clusters", provider: "Bgaming", badge: null, img: "images/games/aztec.png" },
+    { name: "The Crypt 2", provider: "NolimitCity", badge: null, img: "images/games/crypt2.png" },
+    { name: "Riot: Urban Wilds", provider: "Mascot", badge: "new", img: "images/games/riot.png" },
+    { name: "Charm Of The Dragon", provider: "Hacksaw", badge: null, img: "images/games/dragon.png" }
+];
         const gamesGrid = document.getElementById('gamesGrid');
         let loadedCount = 0;
         const batchSize = 16;
         function createGameCard(game) {
             const card = document.createElement('div');
-            card.className = 'game-card group relative overflow-hidden rounded-2xl text-left outline-none cursor-pointer';
+            card.className = 'game-card group relative overflow-hidden rounded-2xl bg-[#161931] border border-[#252952] text-left outline-none cursor-pointer transition-all hover:border-[#ff8c05]/50';
             card.setAttribute('tabindex', '0');
+
             let badgeHTML = '';
             if (game.badge === 'hot') {
-                badgeHTML = `<div class="absolute top-2 left-2 z-10 flex items-center gap-1 transition-opacity game-badges"><div class="inline-flex items-center justify-center rounded-xs bg-primary-dark text-white px-1.5 py-0.5 text-xs font-bold">Горячие</div></div>`;
+                badgeHTML = `<div class="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-md bg-gradient-to-r from-[#ff8c05] to-[#f54d05] text-white text-[10px] font-black uppercase italic shadow-lg">Горячие</div>`;
             } else if (game.badge === 'new') {
-                badgeHTML = `<div class="absolute top-2 left-2 z-10 flex items-center gap-1 transition-opacity game-badges"><div class="inline-flex items-center justify-center rounded-xs bg-secondary text-white px-1.5 py-0.5 text-xs font-bold">Новое</div></div>`;
+                badgeHTML = `<div class="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10px] font-black uppercase italic shadow-lg">Новое</div>`;
             }
             card.innerHTML = `
-                <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted">
-                    <img src="http://static.photos/technology/320x240/${game.seed}" alt="${game.name}" class="absolute inset-0 size-full object-cover" draggable="false" loading="lazy">
-                    <div class="game-overlay absolute inset-0 bg-black/65 opacity-0 transition-opacity group-hover:bg-black/75 group-hover:opacity-100"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 transition-opacity pointer-events-none opacity-0 group-hover:pointer-events-auto group-hover:opacity-100">
-                        <button class="flex cursor-pointer items-center justify-center rounded-xl p-3 bg-secondary shadow-lg outline-none" aria-label="${game.name}">
-                            <i data-lucide="play" class="h-5 w-5 text-white rotate-90"></i>
-                        </button>
-                        <button class="cursor-pointer text-sm font-semibold text-white transition-colors outline-none hover:text-primary">Демо игра</button>
+                <div class="relative aspect-square w-full overflow-hidden">
+                    <!-- Теперь берем путь из game.img -->
+                    <img src="${game.img}" alt="${game.name}" 
+                         class="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                         draggable="false" loading="lazy"
+                         onerror="this.src='https://placehold.co/300x300/161931/8194c8?text=${game.name}'">
+                    
+                    <div class="absolute inset-0 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center">
+                        <div class="flex flex-col items-center gap-2">
+                            <button class="w-12 h-12 rounded-full bg-gradient-to-r from-[#ff8c05] to-[#f54d05] flex items-center justify-center shadow-xl shadow-orange-500/20 transform scale-50 group-hover:scale-100 transition-transform">
+                                <i data-lucide="play" class="h-6 w-6 text-white fill-current"></i>
+                            </button>
+                            <span class="text-[10px] font-bold text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Играть</span>
+                        </div>
                     </div>
                     ${badgeHTML}
                 </div>
-                <div class="w-full px-3 py-2.5 bg-card rounded-b-2xl">
-                    <div class="text-foreground truncate text-sm font-medium">${game.name}</div>
-                    <div class="truncate text-xs text-placeholder">${game.provider}</div>
+                <div class="w-full px-3 py-2 text-center border-t border-[#252952]">
+                    <div class="text-gray-100 truncate text-[11px] font-bold uppercase tracking-tighter">${game.name}</div>
+                    <div class="truncate text-[9px] text-[#8194c8] font-bold uppercase opacity-60">${game.provider}</div>
                 </div>
             `;
             return card;
         }
         function loadMoreGames() {
+            if (!gamesGrid) return;
             const end = Math.min(loadedCount + batchSize, games.length);
             for (let i = loadedCount; i < end; i++) {
                 gamesGrid.appendChild(createGameCard(games[i]));
             }
             loadedCount = end;
-            lucide.createIcons();
-            if (loadedCount >= games.length) {
-                document.getElementById('showMoreBtn').style.display = 'none';
+            lucide.createIcons();         
+            const btn = document.getElementById('showMoreBtn');
+            if (btn && loadedCount >= games.length) {
+                btn.style.display = 'none';
             }
         }
         loadMoreGames();
-        document.getElementById('showMoreBtn').addEventListener('click', loadMoreGames);
+        const showMoreBtn = document.getElementById('showMoreBtn');
+        if (showMoreBtn) {
+            showMoreBtn.addEventListener('click', loadMoreGames);
+        }
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.category-btn').forEach(b => {
-                    b.classList.remove('active');
-                    b.classList.remove('border-secondary', 'text-foreground');
-                    b.classList.add('border-border', 'text-muted-foreground');
-                });
-                btn.classList.add('active');
-                btn.classList.remove('border-border', 'text-muted-foreground');
-                btn.classList.add('border-secondary', 'text-foreground');
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
+                btn.classList.add('bg-blue-600', 'text-white');
             });
         });
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarContainer = document.getElementById('sidebarContainer');
-        let sidebarCollapsed = false;
-
-        if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', () => {
-                sidebarCollapsed = !sidebarCollapsed;
-                if (sidebarCollapsed) {
-                    sidebar.style.width = '72px';
-                    sidebar.querySelectorAll('.min-w-0.flex-1, span.text-sm, .active-dot').forEach(el => {
-                        el.style.display = 'none';
-                    });
-                    sidebarToggle.querySelector('i, svg')?.classList.remove('rotate-180');
-                } else {
-                    sidebar.style.width = '240px';
-                    sidebar.querySelectorAll('.min-w-0.flex-1, span.text-sm, .active-dot').forEach(el => {
-                        el.style.display = '';
-                    });
-                    sidebarToggle.querySelector('i, svg')?.classList.add('rotate-180');
-                }
-            });
-        }
     </script>
 </body>
 </html>7
