@@ -48,113 +48,54 @@
         }
     </script>
 <style>
-    /* === 1. ГЛОБАЛЬНЫЕ СТИЛИ === */
-    * { 
-        box-sizing: border-box; 
-        margin: 0; 
-        padding: 0; 
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    body { 
-        background: #0B0D1A; 
-        color: #E8E8ED; 
-        font-family: 'Inter', sans-serif; 
-        overflow-x: hidden;
-    }
-
-    /* Кастомный скроллбар (тонкий и темный) */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0B0D1A; color: #E8E8ED; font-family: 'Inter', sans-serif; }
+    ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #0B0D1A; }
-    ::-webkit-scrollbar-thumb { background: #1E2040; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #EE7522; }
-
-    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-
-    /* === 2. ГРАДИЕНТЫ И ТЕКСТ === */
+    ::-webkit-scrollbar-thumb { background: #252747; border-radius: 3px; }
     .text-gradient-primary {
         background: linear-gradient(135deg, #EE7722, #EE4D22);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
-
-    .orange-gradient { 
-        background: linear-gradient(90deg, #ff8c05 0%, #f54d05 100%); 
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #EE7722, #EE4D22);
     }
-
-    /* === 3. КНОПКИ (С эффектом свечения и нажатия) === */
     .btn-primary {
         background: linear-gradient(135deg, #EE7722, #EE4D22);
-        box-shadow: 0 4px 15px rgba(238, 117, 34, 0.25);
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .btn-primary:hover {
-        box-shadow: 0 8px 25px rgba(238, 117, 34, 0.4);
-        transform: translateY(-1px);
-        filter: brightness(1.1);
-    }
-
-    .btn-primary:active {
-        transform: scale(0.96);
-        filter: brightness(0.9);
-    }
-
-    /* === 4. ХЕДЕР И ЛОГО (Фикс "Шляпы") === */
-    header img {
-        max-height: 100%;
-        width: auto;
-        display: block;
-    }
-
-    /* === 5. САЙДБАР (Идеальное выравнивание) === */
-    .sidebar-item {
+        box-shadow: 0 8px 24px rgba(238,117,34,0.3);
         position: relative;
-        transition: all 0.2s ease;
+        overflow: hidden;
     }
-
-    /* Точка-индикатор активного пункта */
-    .active-dot {
-        position: absolute !important;
-        left: 10px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        width: 4px;
-        height: 4px;
-        background: #EE7522;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #EE7522, 0 0 5px #EE7522;
+    .btn-primary::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: black;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.2s;
+        z-index: 1;
     }
-
-    .sidebar-item.active .active-dot {
-        opacity: 1;
-    }
-
-    .sidebar-item i, .sidebar-item svg {
-        min-width: 24px;
-        transition: transform 0.2s ease;
-    }
-
-    .sidebar-item:hover i {
-        transform: scale(1.1);
-    }
-
-    /* === 6. КАРТОЧКИ ИГР === */
+    .btn-primary:hover::after { opacity: 0.1; }
+    .btn-primary:active::after { opacity: 0.2; }
+    .btn-primary span { position: relative; z-index: 2; }
+    .sidebar-item.active { color: #EE7522; }
+    .sidebar-item.active .active-dot { opacity: 1; transform: translateX(0) scale(1); }
+    .sidebar-item:hover { color: #E8E8ED; }
     .game-card:hover .game-overlay { opacity: 1; }
-    .game-card {
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    .game-card:hover .game-badges { opacity: 0; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .glow-purple {
+        position: absolute;
+        width: 228px; height: 228px;
+        background: #313187;
+        opacity: 0.2;
+        filter: blur(80px);
+        border-radius: 32px;
+        pointer-events: none;
     }
-    .game-card:hover {
-        transform: translateY(-6px);
-        z-index: 10;
-    }
-
-    /* === 7. АНИМАЦИИ === */
     @keyframes slideBanner {
         0%, 30% { transform: translateX(0); }
         33%, 63% { transform: translateX(-100%); }
@@ -162,77 +103,69 @@
         100% { transform: translateX(0); }
     }
     .banner-slide { animation: slideBanner 15s infinite ease-in-out; }
-
-    /* Пурпурное свечение на фоне */
-    .glow-purple {
-        position: absolute;
-        width: 200px; height: 200px;
-        background: #313187;
-        opacity: 0.15;
-        filter: blur(70px);
-        pointer-events: none;
-        z-index: 0;
+    .category-btn.active {
+        border-color: #5D5FA8;
+        color: #E8E8ED;
     }
-
-    /* Стили для маленьких карточек депозита */
     .deposit-card {
-        background: rgba(23, 25, 49, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.03);
-        transition: background 0.2s;
+        background: linear-gradient(var(--popover), var(--popover)) padding-box,
+                    linear-gradient(146deg, rgba(23,23,61,1) 0%, rgba(54,54,96,1) 3%, rgba(23,23,61,1) 10%, rgba(23,23,61,1) 98%) border-box;
+        border: 1px solid transparent;
     }
-    .deposit-card:hover {
-        background: rgba(30, 33, 64, 0.8);
-        border-color: rgba(238, 117, 34, 0.2);
-    }
-</style>
+</style> 
 </head>
 <body>
     <div class="mx-auto flex min-h-dvh w-full max-w-[1920px] flex-col">
-<header class="fixed top-0 left-1/2 z-50 h-16 xl:h-[72px] w-full max-w-[1920px] -translate-x-1/2 bg-background/75 backdrop-blur-[4px] border-b border-white/5">
-    <div class="flex h-full items-center justify-between px-4 xl:px-6">
-        <div class="flex items-center gap-3 xl:gap-6">
-            
-            <!-- ГРУППА: ПЕРЕКЛЮЧАТЕЛЬ + ЛОГОТИП -->
-            <div class="flex items-center gap-3 xl:w-[240px]">
-                <!-- 1. КНОПКА СВОРАЧИВАНИЯ (Тот самый серый бокс) -->
-                <button id="sidebarToggle" class="hidden xl:flex items-center justify-center size-8 shrink-0 rounded bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-all">
-                    <i data-lucide="chevron-left" class="size-4"></i>
-                </button>
-                
-                <!-- 2. ЛОГОТИП (Иконка + Текст) -->
-                <a href="javascript:void(0)" class="flex items-center gap-2.5">
-                    <!-- Иконка Феникса (УВЕЛИЧИЛИ ДО h-11) -->
-                    <img src="fenix2/Logoicon.png" alt="Fenix Icon" class="h-10 xl:h-11 w-auto object-contain shrink-0">
-                    
-                    <!-- Текстовое лого (УМЕНЬШИЛИ ДО h-5) -->
-                    <img src="fenix2/fenix-wordmark.svg" alt="Fenix" class="hidden xl:block h-4 xl:h-5 w-auto object-contain shrink-0 opacity-90 mt-1">
-                </a>
-            </div>
-
-            <!-- ПОИСК ИГРЫ (ТОЛЬКО ДЛЯ ПК) -->
-            <div class="hidden xl:block">
-                <button class="flex h-12 w-[260px] cursor-pointer items-center gap-3 rounded-2xl border border-transparent bg-input px-3 text-left shadow-xs transition-colors hover:bg-muted focus:outline-none">
-                    <i data-lucide="search" class="h-4 w-4 shrink-0 text-muted-foreground"></i>
-                    <span class="min-w-0 flex-1 truncate text-sm font-medium text-placeholder">Поиск игры</span>
-                    <div class="inline-flex items-center gap-1 shrink-0 rounded-xl bg-surface-400 p-1">
-                        <kbd class="inline-flex h-6 min-w-0 items-center justify-center rounded-lg bg-surface-300 px-2 text-xs font-semibold text-foreground">Ctrl</kbd>
-                        <span class="text-xs font-semibold text-placeholder">+</span>
-                        <kbd class="inline-flex h-6 min-w-0 items-center justify-center rounded-lg bg-surface-300 px-2 text-xs font-semibold text-foreground">K</kbd>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <!-- КНОПКИ АВТОРИЗАЦИИ -->
-        <div class="flex items-center gap-2 xl:gap-4">
-            <button class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-bold h-10 xl:h-11 rounded-xl px-6 border border-border text-foreground transition-all hover:bg-muted uppercase italic">
-                Вход
-            </button>
-            <button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-black text-white h-10 xl:h-11 rounded-xl px-8 transition-all shadow-lg uppercase italic">
-                <span>Регистрация</span>
-            </button>
-        </div>
-    </div>
+<header class="fixed top-0 left-1/2 z-50 h-16 xl:h-[72px] w-full max-w-[1920px] -translate-x-1/2 bg-background/75 backdrop-blur-[4px]">
+<div class="flex h-full items-center justify-between px-4 xl:px-6">
+<div class="flex items-center gap-2 xl:gap-6">
+<div class="flex items-center gap-2 xl:w-[240px] xl:px-1.5">
+<button id="sidebarToggle" class="hidden xl:grid size-8 cursor-pointer place-items-center rounded-xs border border-border bg-muted text-foreground" aria-label="Свернуть/развернуть меню">
+<i data-lucide="chevron-right" class="size-4 transition-transform duration-200"></i>
+</button>
+<a href="#" class="inline-flex cursor-pointer items-center gap-2 rounded-md" aria-label="На главную">
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 shrink-0">
+<path d="M39.0412 10.0007C39.0412 10.0007 38.6042 8.85497 37.7037 8.40679C36.8032 7.9589 35.4395 8.14847 35.4395 8.14847C35.4395 8.14847 35.1073 6.73548 31.7243 6.87357C28.3413 7.01165 26.7151 7.39912 25.3864 6.4858C24.0577 5.57247 24.014 5.13322 23.9092 5.20226C23.8044 5.2713 23.5069 6.31349 24.6173 7.71785C25.8412 9.22547 28.2365 9.09632 28.2365 9.09632C28.2365 9.09632 27.2312 10.1129 25.8062 10.1733C24.3812 10.2337 23.6818 9.95786 23.6818 9.95786C23.6818 9.95786 24.3724 11.25 25.3864 11.4482C26.4005 11.6464 27.5981 11.1982 27.5981 11.1982C27.5981 11.1982 26.1202 12.8639 26.5164 14.7239C26.9621 16.8175 29.0095 17.3781 33.534 20.3261C39.0282 23.9056 38.5758 27.8988 38.4777 28.9454C38.3793 29.9921 37.8221 31.3813 38.4448 30.7611C39.0678 30.1409 41.4673 26.445 40.6214 23.0334C39.7756 19.6217 37.2973 18.0129 36.2745 17.1407C35.2517 16.2684 33.4422 14.2138 34.5436 12.0815C35.6452 9.94923 39.0412 10.001 39.0412 10.001V10.0007Z" fill="url(#fg1)"/>
+<path d="M34.5043 22.5099C34.5043 22.5099 33.217 20.6729 26.3742 17.5475C19.3047 14.3186 16.5135 10.0522 15.8576 7.20927C15.2017 4.36633 15.3068 1.80759 15.5955 1.10972C15.8842 0.411858 16.3562 -0.421711 15.5366 0.244013C14.717 0.909738 11.6094 3.20332 10.6651 7.23516C9.72114 11.267 11.8978 13.8644 13.2745 15.3634C14.6512 16.8624 16.8411 17.9609 16.8411 17.9609C16.8411 17.9609 15.0447 18.3614 11.963 16.1C8.88134 13.8385 7.9111 11.0989 7.9111 11.0989C7.9111 11.0989 6.31123 14.7301 7.9111 19.7441C9.51097 24.758 13.9823 25.7918 16.8671 25.9987C19.7519 26.2055 20.6829 25.8695 20.6829 25.8695C20.6829 25.8695 19.0045 27.0843 16.4869 27.2587C13.9693 27.4331 11.0387 26.5608 11.0387 26.5608C11.0387 26.5608 13.1039 29.3133 17.1165 30.4957C21.1292 31.678 24.6104 31.0385 28.8788 29.1193C33.1469 27.2004 34.5043 22.5093 34.5043 22.5093V22.5099Z" fill="url(#fg2)"/>
+<path d="M35.1862 23.2078C35.1862 23.2078 37.8874 25.5338 37.2318 29.9534C36.5762 34.3731 31.908 36.6797 29.6066 38.1142C27.3052 39.5486 25.3188 41.3318 24.5911 43.503C23.8633 45.674 24.2568 48 24.2568 48C24.2568 48 21.6015 46.0421 21.4046 43.0183C21.2081 39.9944 22.939 37.5326 24.1191 36.5634C25.2992 35.5941 25.7908 35.3034 25.7908 35.3034C25.7908 35.3034 23.3518 35.4584 21.1292 37.6681C18.9067 39.8777 18.7098 42.5141 18.7098 42.5141C18.7098 42.5141 17.1954 38.7924 18.7098 35.8849C20.2242 32.9773 22.8668 32.281 26.2169 31.4266C29.587 30.5671 32.6683 28.6157 33.888 26.3481C35.0008 24.2786 35.1862 23.2078 35.1862 23.2078Z" fill="url(#fg3)"/>
+<defs>
+<linearGradient id="fg1" x1="23.6818" y1="18.0549" x2="40.7999" y2="18.0549" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient>
+<linearGradient id="fg2" x1="7.20024" y1="15.5462" x2="34.5043" y2="15.5462" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient>
+<linearGradient id="fg3" x1="18.0367" y1="35.6039" x2="37.3342" y2="35.6039" gradientUnits="userSpaceOnUse"><stop stop-color="#EF8A25"/><stop offset="0.81" stop-color="#DA2030"/></linearGradient>
+</defs>
+</svg>
+<span class="hidden xl:block h-8 w-[103px] shrink-0">
+<svg viewBox="0 0 103 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-foreground h-full w-full">
+<path d="M0 0.744184H19.2348V6.34747H6.02824V13.4829H15.7448V18.6047H6.02824V31.3434H0V0.744184Z" fill="currentColor"/>
+<path d="M32.7123 32C29.0636 32 26.1949 31.0369 24.1061 29.1108C22.0174 27.1555 20.973 24.4268 20.973 20.9248C20.973 17.4519 21.8984 14.7086 23.7492 12.6949C25.6264 10.6813 28.2968 9.67442 31.7604 9.67442C34.0342 9.67442 35.9643 10.1414 37.5507 11.0752C39.1371 12.0091 40.3401 13.3078 41.1597 14.9713C41.9793 16.6056 42.3892 18.4587 42.3892 20.5308V23.2011H26.684C27.107 25.886 29.3809 27.2285 33.5054 27.2285C34.7217 27.2285 35.9775 27.1117 37.2731 26.8782C38.5686 26.6448 39.6923 26.3238 40.6441 25.9152V30.5554C39.7188 30.9932 38.529 31.3434 37.0748 31.606C35.6206 31.8687 34.1664 32 32.7123 32ZM36.7179 18.9111C36.6385 17.5103 36.1626 16.4305 35.2901 15.6717C34.4176 14.8837 33.2146 14.4897 31.6811 14.4897C30.174 14.4897 28.9843 14.8837 28.1118 15.6717C27.2392 16.4596 26.7633 17.5394 26.684 18.9111H36.7179Z" fill="currentColor"/>
+<path d="M45.7014 10.3311H51.4916V12.9138C52.3641 11.834 53.3953 11.0315 54.5851 10.5062C55.8013 9.95166 57.0704 9.67442 58.3924 9.67442C60.9835 9.67442 62.9136 10.4478 64.1827 11.9945C65.4782 13.5121 66.126 15.5695 66.126 18.1669V31.3434H60.1374V18.9111C60.1374 16.197 59.0005 14.8399 56.7267 14.8399C55.722 14.8399 54.7834 15.1172 53.9109 15.6717C53.0384 16.197 52.298 16.985 51.6899 18.0356V31.3434H45.7014V10.3311Z" fill="currentColor"/>
+<path d="M73.393 7.09166C72.4676 7.09166 71.6876 6.75604 71.053 6.08482C70.4185 5.41359 70.1012 4.56726 70.1012 3.54583C70.1012 2.55358 70.4185 1.72184 71.053 1.05062C71.6876 0.350205 72.4676 0 73.393 0C74.3183 0 75.0983 0.350205 75.7329 1.05062C76.3674 1.72184 76.6847 2.55358 76.6847 3.54583C76.6847 4.56726 76.3674 5.41359 75.7329 6.08482C75.0983 6.75604 74.3183 7.09166 73.393 7.09166ZM70.3788 10.3311H76.4071V31.3434H70.3788V10.3311Z" fill="currentColor"/>
+<path d="M88.1674 20.487L80.5527 10.3311H87.2552L91.4988 16.0219L95.782 10.3311H102.484L94.8301 20.487L103 31.3434H96.3769L91.4988 24.9083L86.6603 31.3434H79.9975L88.1674 20.487Z" fill="currentColor"/>
+</svg>
+</span>
+</a>
+</div>
+<div class="hidden xl:block">
+<button class="flex h-12 w-[260px] cursor-pointer items-center gap-3 rounded-2xl border border-transparent bg-input px-3 text-left shadow-xs transition-colors hover:bg-muted">
+<i data-lucide="search" class="h-4 w-4 shrink-0 text-muted-foreground"></i>
+<span class="min-w-0 flex-1 truncate text-sm font-medium text-placeholder">Поиск игры</span>
+<div class="inline-flex items-center gap-1 shrink-0 rounded-xl bg-surface-400 p-1">
+<kbd class="inline-flex h-6 min-w-0 items-center justify-center rounded-lg bg-surface-300 px-2 text-xs font-semibold text-foreground">Ctrl</kbd>
+<span class="text-xs font-semibold text-placeholder">+</span>
+<kbd class="inline-flex h-6 min-w-0 items-center justify-center rounded-lg bg-surface-300 px-2 text-xs font-semibold text-foreground">K</kbd>
+</div>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-2 xl:gap-4">
+<button class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium h-12 rounded-xl px-6 border border-border text-foreground transition-all hover:bg-muted">
+Вход
+</button>
+<button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium text-white h-12 rounded-xl px-6 transition-all">
+<span>Регистрация</span>
+</button>
+</div>
+</div>
 </header>
         <div class="pointer-events-none fixed top-[72px] left-1/2 z-40 hidden w-full max-w-[1920px] -translate-x-1/2 px-6 xl:block" id="sidebarContainer">
             <aside class="pointer-events-auto h-[calc(100dvh-72px-16px)] max-h-[calc(100dvh-72px-16px)] min-h-0 overflow-hidden rounded-2xl transition-[width] duration-200 ease-out w-[240px]" id="sidebar" aria-label="Sidebar">
