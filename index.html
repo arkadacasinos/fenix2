@@ -47,84 +47,144 @@
             }
         }
     </script>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0B0D1A; color: #E8E8ED; font-family: 'Inter', sans-serif; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0B0D1A; }
-        ::-webkit-scrollbar-thumb { background: #252747; border-radius: 3px; }
-        .text-gradient-primary {
-            background: linear-gradient(135deg, #EE7722, #EE4D22);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .bg-gradient-primary {
-            background: linear-gradient(135deg, #EE7722, #EE4D22);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #EE7722, #EE4D22);
-            box-shadow: 0 8px 24px rgba(238,117,34,0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: black;
-            opacity: 0;
-            transition: opacity 0.2s;
-            z-index: 1;
-        }
-        .btn-primary:hover::after { opacity: 0.1; }
-        .btn-primary:active::after { opacity: 0.2; }
-        .btn-primary span { position: relative; z-index: 2; }
-        .sidebar-item.active { color: #EE7522; }
-        .sidebar-item.active .active-dot { opacity: 1; transform: translateX(0) scale(1); }
-        .sidebar-item:hover { color: #E8E8ED; }
-        .game-card:hover .game-overlay { opacity: 1; }
-        .game-card:hover .game-badges { opacity: 0; }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        .glow-purple {
-            position: absolute;
-            width: 228px; height: 228px;
-            background: #313187;
-            opacity: 0.2;
-            filter: blur(80px);
-            border-radius: 32px;
-            pointer-events: none;
-        }
-        @keyframes slideBanner {
-            0%, 30% { transform: translateX(0); }
-            33%, 63% { transform: translateX(-100%); }
-            66%, 96% { transform: translateX(-200%); }
-            100% { transform: translateX(0); }
-        }
-        .banner-slide { animation: slideBanner 15s infinite ease-in-out; }
-        .category-btn.active {
-            border-color: #5D5FA8;
-            color: #E8E8ED;
-        }
-        .deposit-card {
-            background: linear-gradient(var(--popover), var(--popover)) padding-box,
-                        linear-gradient(146deg, rgba(23,23,61,1) 0%, rgba(54,54,96,1) 3%, rgba(23,23,61,1) 10%, rgba(23,23,61,1) 98%) border-box;
-            border: 1px solid transparent;
-        }
-        header img {
-    max-height: 100%;
-}
+<style>
+    /* === 1. ГЛОБАЛЬНЫЕ СТИЛИ === */
+    * { 
+        box-sizing: border-box; 
+        margin: 0; 
+        padding: 0; 
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-.sidebar-item i, .sidebar-item svg {
-    min-width: 20px;
-}
-.active-dot {
-    left: 8px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-}
-    </style>
+    body { 
+        background: #0B0D1A; 
+        color: #E8E8ED; 
+        font-family: 'Inter', sans-serif; 
+        overflow-x: hidden;
+    }
+
+    /* Кастомный скроллбар (тонкий и темный) */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #0B0D1A; }
+    ::-webkit-scrollbar-thumb { background: #1E2040; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #EE7522; }
+
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+    /* === 2. ГРАДИЕНТЫ И ТЕКСТ === */
+    .text-gradient-primary {
+        background: linear-gradient(135deg, #EE7722, #EE4D22);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .orange-gradient { 
+        background: linear-gradient(90deg, #ff8c05 0%, #f54d05 100%); 
+    }
+
+    /* === 3. КНОПКИ (С эффектом свечения и нажатия) === */
+    .btn-primary {
+        background: linear-gradient(135deg, #EE7722, #EE4D22);
+        box-shadow: 0 4px 15px rgba(238, 117, 34, 0.25);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-primary:hover {
+        box-shadow: 0 8px 25px rgba(238, 117, 34, 0.4);
+        transform: translateY(-1px);
+        filter: brightness(1.1);
+    }
+
+    .btn-primary:active {
+        transform: scale(0.96);
+        filter: brightness(0.9);
+    }
+
+    /* === 4. ХЕДЕР И ЛОГО (Фикс "Шляпы") === */
+    header img {
+        max-height: 100%;
+        width: auto;
+        display: block;
+    }
+
+    /* === 5. САЙДБАР (Идеальное выравнивание) === */
+    .sidebar-item {
+        position: relative;
+        transition: all 0.2s ease;
+    }
+
+    /* Точка-индикатор активного пункта */
+    .active-dot {
+        position: absolute !important;
+        left: 10px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 4px;
+        height: 4px;
+        background: #EE7522;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #EE7522, 0 0 5px #EE7522;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar-item.active .active-dot {
+        opacity: 1;
+    }
+
+    .sidebar-item i, .sidebar-item svg {
+        min-width: 24px;
+        transition: transform 0.2s ease;
+    }
+
+    .sidebar-item:hover i {
+        transform: scale(1.1);
+    }
+
+    /* === 6. КАРТОЧКИ ИГР === */
+    .game-card:hover .game-overlay { opacity: 1; }
+    .game-card {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .game-card:hover {
+        transform: translateY(-6px);
+        z-index: 10;
+    }
+
+    /* === 7. АНИМАЦИИ === */
+    @keyframes slideBanner {
+        0%, 30% { transform: translateX(0); }
+        33%, 63% { transform: translateX(-100%); }
+        66%, 96% { transform: translateX(-200%); }
+        100% { transform: translateX(0); }
+    }
+    .banner-slide { animation: slideBanner 15s infinite ease-in-out; }
+
+    /* Пурпурное свечение на фоне */
+    .glow-purple {
+        position: absolute;
+        width: 200px; height: 200px;
+        background: #313187;
+        opacity: 0.15;
+        filter: blur(70px);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Стили для маленьких карточек депозита */
+    .deposit-card {
+        background: rgba(23, 25, 49, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        transition: background 0.2s;
+    }
+    .deposit-card:hover {
+        background: rgba(30, 33, 64, 0.8);
+        border-color: rgba(238, 117, 34, 0.2);
+    }
+</style>
 </head>
 <body>
     <div class="mx-auto flex min-h-dvh w-full max-w-[1920px] flex-col">
