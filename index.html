@@ -128,20 +128,30 @@
 </head>
 <body>
     <div class="mx-auto flex min-h-dvh w-full max-w-[1920px] flex-col">
-<header class="fixed top-0 left-1/2 z-50 h-16 xl:h-[72px] w-full max-w-[1920px] -translate-x-1/2 bg-background/75 backdrop-blur-[4px]">
+<header class="fixed top-0 left-1/2 z-50 h-16 xl:h-[72px] w-full max-w-[1920px] -translate-x-1/2 bg-background/75 backdrop-blur-[4px] border-b border-white/5">
     <div class="flex h-full items-center justify-between px-4 xl:px-6">
-        <div class="flex items-center gap-2 xl:gap-6">
-            <div class="flex items-center gap-2 xl:w-[240px] xl:px-1.5">
-                <button id="sidebarToggle" class="hidden xl:grid size-8 cursor-pointer place-items-center rounded-xs border border-border bg-muted text-foreground" aria-label="Свернуть/развернуть меню">
-                    <i data-lucide="chevron-right" class="size-4 transition-transform duration-200"></i>
-                </button>                
-              <a href="javascript:void(0)" class="flex items-center gap-2 px-2">
-              <img src="fenix2/Logoicon.png" alt="" class="h-8 w-8 object-contain shrink-0">
-           <img src="fenix2/fenix-wordmark.svg" alt="" class="hidden xl:block h-6 w-auto object-contain shrink-0">
-           </a>
+        <div class="flex items-center gap-3 xl:gap-6">
+            
+            <!-- ГРУППА: ПЕРЕКЛЮЧАТЕЛЬ + ЛОГОТИП -->
+            <div class="flex items-center gap-3 xl:w-[240px]">
+                <!-- 1. КНОПКА СВОРАЧИВАНИЯ (Тот самый серый бокс) -->
+                <button id="sidebarToggle" class="hidden xl:flex items-center justify-center size-8 shrink-0 rounded bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-all">
+                    <i data-lucide="chevron-left" class="size-4"></i>
+                </button>
+                
+                <!-- 2. ЛОГОТИП (Иконка + Текст) -->
+                <a href="javascript:void(0)" class="flex items-center gap-2.5">
+                    <!-- Иконка Феникса (УВЕЛИЧИЛИ ДО h-11) -->
+                    <img src="fenix2/Logoicon.png" alt="Fenix Icon" class="h-10 xl:h-11 w-auto object-contain shrink-0">
+                    
+                    <!-- Текстовое лого (УМЕНЬШИЛИ ДО h-5) -->
+                    <img src="fenix2/fenix-wordmark.svg" alt="Fenix" class="hidden xl:block h-4 xl:h-5 w-auto object-contain shrink-0 opacity-90 mt-1">
+                </a>
             </div>
+
+            <!-- ПОИСК ИГРЫ (ТОЛЬКО ДЛЯ ПК) -->
             <div class="hidden xl:block">
-                <button class="flex h-12 w-[260px] cursor-pointer items-center gap-3 rounded-2xl border border-transparent bg-input px-3 text-left shadow-xs transition-colors hover:bg-muted">
+                <button class="flex h-12 w-[260px] cursor-pointer items-center gap-3 rounded-2xl border border-transparent bg-input px-3 text-left shadow-xs transition-colors hover:bg-muted focus:outline-none">
                     <i data-lucide="search" class="h-4 w-4 shrink-0 text-muted-foreground"></i>
                     <span class="min-w-0 flex-1 truncate text-sm font-medium text-placeholder">Поиск игры</span>
                     <div class="inline-flex items-center gap-1 shrink-0 rounded-xl bg-surface-400 p-1">
@@ -152,11 +162,13 @@
                 </button>
             </div>
         </div>
+
+        <!-- КНОПКИ АВТОРИЗАЦИИ -->
         <div class="flex items-center gap-2 xl:gap-4">
-            <button class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium h-12 rounded-xl px-6 border border-border text-foreground transition-all hover:bg-muted">
+            <button class="inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-bold h-10 xl:h-11 rounded-xl px-6 border border-border text-foreground transition-all hover:bg-muted uppercase italic">
                 Вход
             </button>
-            <button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium text-white h-12 rounded-xl px-6 transition-all">
+            <button class="btn-primary inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-black text-white h-10 xl:h-11 rounded-xl px-8 transition-all shadow-lg uppercase italic">
                 <span>Регистрация</span>
             </button>
         </div>
