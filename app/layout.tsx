@@ -216,7 +216,7 @@ export default function RootLayout({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="age-rating" content="18+" />
         <meta httpEquiv="content-language" content="ru" />
-        <meta name="yandex-verification" content="02765b381b2705b4" />
+        <meta name="yandex-verification" content="7ef52e3ac2c54c39" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
